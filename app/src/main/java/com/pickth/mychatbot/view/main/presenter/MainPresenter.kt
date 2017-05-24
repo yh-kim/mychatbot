@@ -1,14 +1,14 @@
 package com.pickth.mychatbot.view.main.presenter
 
 import android.content.Context
-import android.widget.Toast
+import com.pickth.mychatbot.util.OnItemClickListener
 import com.pickth.mychatbot.view.main.adapter.contract.ChatAdapterContract
 import com.pickth.mychatbot.view.main.adapter.data.ChatData
 
 /**
  * Created by Kim on 2017-05-24.
  */
-class MainPresenter: MainContract.Presenter {
+class MainPresenter: MainContract.Presenter, OnItemClickListener {
     var context: Context? = null
     var view: MainContract.View? = null
     var chatView: ChatAdapterContract.View? = null
@@ -19,6 +19,8 @@ class MainPresenter: MainContract.Presenter {
      */
     override fun setChatAdapterView(chatView: ChatAdapterContract.View) {
         this.chatView = chatView
+
+        this.chatView?.setOnClickListener(this)
     }
 
     /**
@@ -36,11 +38,12 @@ class MainPresenter: MainContract.Presenter {
         this.context = context
     }
 
-    override fun onItemClick(position: Int) {
-        Toast.makeText(context, "$position 번째 메시지를 누르셨습니다", Toast.LENGTH_SHORT).show()
+    override fun itemClick(position: Int) {
+        this.view?.showToast("$position 번째 메시지를 누르셨습니다")
     }
 
     fun testInputItem(text: String) {
         chatModel?.addItem(ChatData(text,0))
+        chatModel?.addItem(ChatData("봇의 답변입니다",1))
     }
 }

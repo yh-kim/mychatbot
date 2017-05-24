@@ -19,7 +19,5 @@ interface MainContract {
         fun setChatAdapterModel(chatModel: ChatAdapterContract.Model)
 
         fun setChatAdapterView(chatView: ChatAdapterContract.View)
-
-        fun onItemClick(position: Int)
     }
 }
