@@ -1,4 +1,4 @@
-package com.pickth.mychatbot
+package com.pickth.mychatbot.view
 
 /**
  * Created by Kim on 2017-05-24.
