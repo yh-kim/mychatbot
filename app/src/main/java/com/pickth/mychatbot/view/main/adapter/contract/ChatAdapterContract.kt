@@ -15,5 +15,7 @@ interface ChatAdapterContract {
         fun getItem(position: Int): ChatData
 
         fun addItem(item: ChatData)
+
+        fun listSize(): Int
     }
 }

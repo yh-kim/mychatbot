@@ -11,6 +11,7 @@ import com.pickth.mychatbot.view.main.presenter.MainPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
+    var adapter: ChatAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,13 +20,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         val presenter = MainPresenter()
         presenter.attachView(this,applicationContext)
 
-        val adapter = ChatAdapter(applicationContext)
+        adapter = ChatAdapter(applicationContext)
 
         recycler_main_chat.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         recycler_main_chat.adapter = adapter
 
-        presenter.setChatAdapterModel(adapter)
-        presenter.setChatAdapterView(adapter)
+        presenter.setChatAdapterModel(adapter as ChatAdapter)
+        presenter.setChatAdapterView(adapter as ChatAdapter)
 
         btn_main_submit.setOnClickListener {
             val editText = edit_main_input
@@ -34,11 +35,15 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
     }
 
-    // MainContract 연결결
+    // MainContract 연결
     override fun startChatBotActivity(position: Int) {
     }
 
     override fun showToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun scrollToLastChat() {
+        recycler_main_chat.layoutManager.scrollToPosition(adapter?.itemCount!! -1)
     }
 }

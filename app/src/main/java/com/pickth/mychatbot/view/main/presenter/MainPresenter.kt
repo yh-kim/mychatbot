@@ -45,5 +45,7 @@ class MainPresenter: MainContract.Presenter, OnItemClickListener {
     fun testInputItem(text: String) {
         chatModel?.addItem(ChatData(text,0))
         chatModel?.addItem(ChatData("봇의 답변입니다",1))
+
+        view?.scrollToLastChat()
     }
 }

@@ -11,6 +11,8 @@ interface MainContract {
         fun startChatBotActivity(position: Int)
 
         fun showToast(text: String)
+
+        fun scrollToLastChat()
     }
 
     interface Presenter {

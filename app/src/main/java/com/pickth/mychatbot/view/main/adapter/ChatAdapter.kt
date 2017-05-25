@@ -36,7 +36,8 @@ class ChatAdapter(private val context: Context): RecyclerView.Adapter<ChatViewHo
 
     override fun addItem(item: ChatData) {
         itemList.add(item)
-        notifyDataSetChanged()
+//        notifyDataSetChanged()
+        notifyItemInserted(itemList.size - 1)
     }
 
     override fun getItemViewType(position: Int) = itemList.get(position).type
@@ -53,4 +54,5 @@ class ChatAdapter(private val context: Context): RecyclerView.Adapter<ChatViewHo
         return ChatViewHolder(itemView, onItemClickListener)
     }
 
+    override fun listSize(): Int = itemCount
 }
