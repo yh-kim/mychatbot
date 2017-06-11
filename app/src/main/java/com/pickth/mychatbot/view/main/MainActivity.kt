@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import com.pickth.mychatbot.R
+import com.pickth.mychatbot.util.BackPressCloseHandler
 import com.pickth.mychatbot.view.main.adapter.ChatAdapter
 import com.pickth.mychatbot.view.main.presenter.MainContract
 import com.pickth.mychatbot.view.main.presenter.MainPresenter
@@ -45,5 +46,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun scrollToLastChat() {
         recycler_main_chat.layoutManager.scrollToPosition(adapter?.itemCount!! -1)
+    }
+
+    override fun onBackPressed() {
+        BackPressCloseHandler.getInstance()?.onBackPressed(this)
     }
 }
