@@ -3,7 +3,7 @@ package com.pickth.mychatbot.view.main.presenter
 import android.content.Context
 import com.pickth.mychatbot.util.OnItemClickListener
 import com.pickth.mychatbot.view.main.adapter.contract.ChatAdapterContract
-import com.pickth.mychatbot.view.main.adapter.data.ChatData
+import com.pickth.mychatbot.view.main.adapter.data.Message
 
 /**
  * Created by Kim on 2017-05-24.
@@ -43,8 +43,8 @@ class MainPresenter: MainContract.Presenter, OnItemClickListener {
     }
 
     fun testInputItem(text: String) {
-        chatModel?.addItem(ChatData(text,0))
-        chatModel?.addItem(ChatData("봇의 답변입니다",1))
+        chatModel?.addItem(Message(text,0))
+        chatModel?.addItem(Message("봇의 답변입니다",1))
 
         view?.scrollToLastChat()
     }

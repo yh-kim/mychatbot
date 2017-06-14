@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.pickth.mychatbot.R
 import com.pickth.mychatbot.util.OnItemClickListener
 import com.pickth.mychatbot.view.main.adapter.contract.ChatAdapterContract
-import com.pickth.mychatbot.view.main.adapter.data.ChatData
+import com.pickth.mychatbot.view.main.adapter.data.Message
 import com.pickth.mychatbot.view.main.adapter.holder.ChatViewHolder
 
 /**
@@ -24,7 +24,7 @@ class ChatAdapter(private val context: Context): RecyclerView.Adapter<ChatViewHo
 
     var onItemClickListener: OnItemClickListener ?= null
 
-    val itemList: MutableList<ChatData> = ArrayList<ChatData>()
+    val itemList: MutableList<Message> = ArrayList<Message>()
 
     override fun setOnClickListener(clickListener: OnItemClickListener) {
         onItemClickListener = clickListener
@@ -34,7 +34,7 @@ class ChatAdapter(private val context: Context): RecyclerView.Adapter<ChatViewHo
 
     override fun getItem(position: Int) = itemList.get(position)
 
-    override fun addItem(item: ChatData) {
+    override fun addItem(item: Message) {
         itemList.add(item)
 //        notifyDataSetChanged()
         notifyItemInserted(itemList.size - 1)

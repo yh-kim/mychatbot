@@ -30,7 +30,8 @@ class BackPressCloseHandler {
     }
 
 
-
+    // 싱글톤 패턴에서는 context를 가지고 있는걸 조심해야 됨.
+    // 액티비티가 종료된 이후에도 객체를 가지고 있어 OOM가 일어날 수 있음
     fun onBackPressed(context: Activity) {
         if(isBackPressedOnce) {
             context.finish()
