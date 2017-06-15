@@ -14,9 +14,52 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        release {
-            minifyEnabled false
+        debug {
+            minifyEnabled true
+            // Android 플러그인 축소기를 사용하기 위해 proguard false
+            // Android 플러그인 축소기는 코드를 난독 처리하거나 최적화하지 않음
+            // 미사용 코드만 제거
+            useProguard false
+            // 바이트코드 단위의 최적화를 위해서는 proguard-android 대신 proguard-android-optimize를 사용해야함
+            // assumenosideeffects를 사용하기 위해서도 optimize 사용
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            applicationVariants.all { variant ->
+                variant.outputs.each {
+                    output ->
+                        def file = output.outputFile
+                        output.outputFile = new File(file.parent,
+                                file.name.replace("app", "MyChatBot" + defaultConfig.versionName))
+
+                        def date = new Date();
+                        def formattedDate = date.format('yyyy_MM_dd_HH_mm_ss')
+                        output.outputFile = new File(output.outputFile.parent,
+                                output.outputFile.name.replace("-debug", "-debug-" + formattedDate)
+                        )
+                }
+            }
+        }
+
+        release {
+            minifyEnabled true
+            // 바이트코드 단위의 최적화를 위해서는 proguard-android 대신 proguard-android-optimize를 사용해야함
+            // assumenosideeffects를 사용하기 위해서도 optimize 사용
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            applicationVariants.all { variant ->
+                variant.outputs.each {
+                    output ->
+                        def file = output.outputFile
+                        output.outputFile = new File(file.parent,
+                                file.name.replace("app", "MyChatBot" + defaultConfig.versionName))
+
+                        def date = new Date();
+                        def formattedDate = date.format('yyyy_MM_dd_HH_mm_ss')
+                        output.outputFile = new File(output.outputFile.parent,
+                                output.outputFile.name.replace("-release", "-release-" + formattedDate)
+                        )
+                }
+            }
         }
     }
 }
