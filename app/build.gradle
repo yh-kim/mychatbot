@@ -23,21 +23,6 @@ android {
             // 바이트코드 단위의 최적화를 위해서는 proguard-android 대신 proguard-android-optimize를 사용해야함
             // assumenosideeffects를 사용하기 위해서도 optimize 사용
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
-            applicationVariants.all { variant ->
-                variant.outputs.each {
-                    output ->
-                        def file = output.outputFile
-                        output.outputFile = new File(file.parent,
-                                file.name.replace("app", "MyChatBot" + defaultConfig.versionName))
-
-                        def date = new Date();
-                        def formattedDate = date.format('yyyy_MM_dd_HH_mm_ss')
-                        output.outputFile = new File(output.outputFile.parent,
-                                output.outputFile.name.replace("-debug", "-debug-" + formattedDate)
-                        )
-                }
-            }
         }
 
         release {
