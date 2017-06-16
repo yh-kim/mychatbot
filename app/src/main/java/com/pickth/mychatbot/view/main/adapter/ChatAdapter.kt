@@ -24,7 +24,7 @@ class ChatAdapter(private val context: Context): RecyclerView.Adapter<ChatViewHo
 
     var onItemClickListener: OnItemClickListener ?= null
 
-    val itemList: MutableList<Message> = ArrayList<Message>()
+    val itemList: ArrayList<Message> = ArrayList()
 
     override fun setOnClickListener(clickListener: OnItemClickListener) {
         onItemClickListener = clickListener

@@ -5,20 +5,19 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import com.pickth.mychatbot.R
+import com.pickth.mychatbot.base.BaseActivity
 import com.pickth.mychatbot.util.BackPressCloseHandler
-import com.pickth.mychatbot.util.Dlog
 import com.pickth.mychatbot.view.main.adapter.ChatAdapter
 import com.pickth.mychatbot.view.main.presenter.MainContract
 import com.pickth.mychatbot.view.main.presenter.MainPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), MainContract.View {
+class MainActivity : BaseActivity(), MainContract.View {
     var adapter: ChatAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Dlog.v("메인엑티비티 시작")
 
         val presenter = MainPresenter()
         presenter.attachView(this,applicationContext)
