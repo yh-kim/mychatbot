@@ -16,6 +16,8 @@ interface ChatAdapterContract {
 
         fun addItem(item: Message)
 
+        fun removeItem(position: Int)
+
         fun listSize(): Int
     }
 }
