@@ -46,6 +46,11 @@ class ChatAdapter(private val context: Context): RecyclerView.Adapter<ChatViewHo
         notifyItemRangeChanged(position, itemCount - position)
     }
 
+    override fun removeAllItems() {
+        itemList.clear()
+        notifyDataSetChanged()
+    }
+
     override fun getItemViewType(position: Int) = itemList[position].type
 
     override fun onBindViewHolder(holder: ChatViewHolder?, position: Int) {

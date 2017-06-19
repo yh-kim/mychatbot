@@ -42,7 +42,6 @@ class MainPresenter: MainContract.Presenter, OnItemClickListener {
 
     override fun itemClick(position: Int) {
         this.view?.showToast("$position 번째 메시지를 누르셨습니다")
-        this.chatModel?.removeItem(position)
     }
 
     fun testInputItem(text: String) {
