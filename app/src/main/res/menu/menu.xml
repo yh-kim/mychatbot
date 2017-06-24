@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_start_service"
+        android:title="서비스 시작"
+        android:icon="@mipmap/ic_launcher"
+        yourapp:showAsAction="collapseActionView"
+        />
+
+    <item
+        android:id="@+id/menu_stop_service"
+        android:title="서비스 정지"
+        android:icon="@mipmap/ic_launcher_round"
+        yourapp:showAsAction="collapseActionView"
+        />
+</menu>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/colorAccent" />
+    <size
+        android:width="@dimen/floating_widget_size"
+        android:height="@dimen/floating_widget_size"
+        />
+
+    <!--<padding-->
+        <!--android:left="@dimen/floating_widget_size"-->
+        <!--android:right="@dimen/floating_widget_size"-->
+        <!--android:bottom="@dimen/floating_widget_size"-->
+        <!--android:top="@dimen/floating_widget_size" />-->
+
+</shape>
