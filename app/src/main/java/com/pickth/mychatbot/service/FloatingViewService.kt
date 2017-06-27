@@ -44,10 +44,11 @@ class FloatingViewService: Service() {
     )
     var isBeingDrag = false
     var moveAnimator = MoveAnimator()
-    private lateinit var buttonBitmap: Bitmap
-    private lateinit var circleBitmap: Bitmap
-    private lateinit var leftBitmap: Bitmap
-    private lateinit var rightBitmap: Bitmap
+    private lateinit var mButtonBitmap: Bitmap
+    private lateinit var mCircleBitmap: Bitmap
+    private lateinit var mLeftBitmap: Bitmap
+    private lateinit var mRightBitmap: Bitmap
+    private var mSize = 0
 
     override fun onBind(p0: Intent?): IBinder? {
         return null
@@ -58,9 +59,6 @@ class FloatingViewService: Service() {
         Dlog.v("floating view 서비스 시작")
 
         mFloatingView = LayoutInflater.from(this).inflate(R.layout.floating_widget, null)
-
-        // Add the view to the window
-
 
         // Specify the view position
         params.gravity = Gravity.TOP or Gravity.LEFT
@@ -73,9 +71,9 @@ class FloatingViewService: Service() {
 
         with(mFloatingView) {
             // Initialize image view background
-            val size = resources.getDimension(R.dimen.floating_widget_size).toInt()
-            initializeBitmap(size, size)
-            imageView2.setImageBitmap(buttonBitmap)
+            mSize = resources.getDimension(R.dimen.floating_widget_size).toInt()
+            initializeBitmap(mSize, mSize)
+            imageView2.setImageBitmap(mButtonBitmap)
 
             imageView2.setOnTouchListener { view, motionEvent ->
 
@@ -90,8 +88,8 @@ class FloatingViewService: Service() {
                         moveAnimator.stop()
                         isBeingDrag = true
 
-                        buttonBitmap = circleBitmap
-                        imageView2.setImageBitmap(buttonBitmap)
+                        mButtonBitmap = mCircleBitmap
+                        imageView2.setImageBitmap(mButtonBitmap)
 
                         true
                     }
@@ -116,10 +114,10 @@ class FloatingViewService: Service() {
                             Dlog.v("Button click")
                         }
 
-                        Dlog.v("param.x: ${params.x} , defaultDisplay.width: ${mWindowManager.defaultDisplay.width}, width: ${mFloatingView.width}")
+                        Dlog.v("param.x: ${params.x} , defaultDisplay.width: ${mWindowManager.defaultDisplay.width}, width: ${mSize}")
                         isBeingDrag = false
                         goToSide()
-                        imageView2.setImageBitmap(buttonBitmap)
+                        imageView2.setImageBitmap(mButtonBitmap)
                         true
                     }
                     else -> false
@@ -139,31 +137,30 @@ class FloatingViewService: Service() {
     }
 
     fun goToSide() {
-
-        if(params.x < mWindowManager.defaultDisplay.width/2 - mFloatingView.width/2 ) {
+        if(params.x < mWindowManager.defaultDisplay.width/2 - mSize /2 ) {
             moveAnimator.setPosition(0f, params.y.toFloat())
             Dlog.v("Move button to left")
-            buttonBitmap = leftBitmap
+            mButtonBitmap = mLeftBitmap
         } else {
-            moveAnimator.setPosition((mWindowManager.defaultDisplay.width - mFloatingView.width + FLOATING_VIEW_RESIZE_WIDTH).toFloat(), params.y.toFloat())
+            moveAnimator.setPosition((mWindowManager.defaultDisplay.width - mSize + FLOATING_VIEW_RESIZE_WIDTH).toFloat(), params.y.toFloat())
             Dlog.v("Move button to right")
-            buttonBitmap = rightBitmap
+            mButtonBitmap = mRightBitmap
         }
         Dlog.v("x: ${params.x}, y: ${params.y}")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        if(mFloatingView != null) mWindowManager.removeView(mFloatingView)
+        mWindowManager.removeView(mFloatingView)
         Dlog.v("서비스 종료")
     }
 
     private fun initializeBitmap(width: Int, height: Int) {
-        circleBitmap = getBitmap(R.drawable.floating_button)
-        leftBitmap = resizeBitmap(getBitmap(R.drawable.floating_button), FLOATING_VIEW_RESIZE_WIDTH.toInt(), 0, width - FLOATING_VIEW_RESIZE_WIDTH.toInt(), height)
-        rightBitmap = resizeBitmap(getBitmap(R.drawable.floating_button), 0, 0, width - FLOATING_VIEW_RESIZE_WIDTH.toInt(), height)
+        mCircleBitmap = getBitmap(R.drawable.floating_button)
+        mLeftBitmap = resizeBitmap(getBitmap(R.drawable.floating_button), FLOATING_VIEW_RESIZE_WIDTH.toInt(), 0, width - FLOATING_VIEW_RESIZE_WIDTH.toInt(), height)
+        mRightBitmap = resizeBitmap(getBitmap(R.drawable.floating_button), 0, 0, width - FLOATING_VIEW_RESIZE_WIDTH.toInt(), height)
 
-        buttonBitmap = leftBitmap
+        mButtonBitmap = mLeftBitmap
     }
 
     private fun getBitmap(drawableRes: Int): Bitmap {
