@@ -69,7 +69,12 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun onBackPressed() {
-        BackPressCloseHandler.getInstance()?.onBackPressed(this)
+        if(BackPressCloseHandler.getInstance()!!.onBackPressed()) {
+            finish()
+        } else {
+            Toast.makeText(applicationContext, "한번 더 누르면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
