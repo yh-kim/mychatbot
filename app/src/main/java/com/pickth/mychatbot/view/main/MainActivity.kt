@@ -15,6 +15,7 @@ import com.pickth.mychatbot.R
 import com.pickth.mychatbot.base.BaseActivity
 import com.pickth.mychatbot.service.FloatingViewService
 import com.pickth.mychatbot.util.BackPressCloseHandler
+import com.pickth.mychatbot.util.DataManagement
 import com.pickth.mychatbot.view.main.adapter.ChatAdapter
 import com.pickth.mychatbot.view.main.presenter.MainContract
 import com.pickth.mychatbot.view.main.presenter.MainPresenter
@@ -103,8 +104,14 @@ class MainActivity : BaseActivity(), MainContract.View {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId) {
-            R.id.menu_start_service -> startService(Intent(applicationContext, FloatingViewService::class.java))
-            R.id.menu_stop_service -> stopService(Intent(applicationContext, FloatingViewService::class.java))
+            R.id.menu_start_service -> {
+                startService(Intent(applicationContext, FloatingViewService::class.java))
+                DataManagement.setAppPreferences(applicationContext, "serviceStatus", "start")
+            }
+            R.id.menu_stop_service -> {
+                stopService(Intent(applicationContext, FloatingViewService::class.java))
+                DataManagement.setAppPreferences(applicationContext, "serviceStatus", "stop")
+            }
             else -> {}
         }
 
