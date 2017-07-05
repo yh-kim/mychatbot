@@ -1,6 +1,8 @@
 package com.pickth.mychatbot.view.main
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -41,7 +43,7 @@ class MainActivity : BaseActivity(), MainContract.View {
         }
 
         presenter = MainPresenter()
-        presenter.attachView(this,applicationContext)
+        presenter.attachView(this, this)
 
         adapter = ChatAdapter(applicationContext)
 
@@ -106,7 +108,20 @@ class MainActivity : BaseActivity(), MainContract.View {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId) {
             R.id.menu_chat_clear -> {
-                adapter.removeAllItems()
+                val builder = AlertDialog.Builder(this)
+                val items = arrayOf("delete all", "cancel")
+                builder.setItems(items, DialogInterface.OnClickListener {
+                    dialogInterface, i ->
+                    when(i) {
+                        0 -> {
+                            // delete all
+                            adapter.removeAllItems()
+                        }
+                    }
+                })
+
+                val dialog = builder.create()
+                dialog.show()
             }
             R.id.menu_start_service -> {
                 startService(Intent(applicationContext, FloatingViewService::class.java))

@@ -1,6 +1,8 @@
 package com.pickth.mychatbot.view.main.presenter
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import com.pickth.mychatbot.util.Dlog
 import com.pickth.mychatbot.util.OnItemClickListener
 import com.pickth.mychatbot.view.main.adapter.ChatAdapter
@@ -53,6 +55,20 @@ class MainPresenter: MainContract.Presenter, OnItemClickListener {
     }
 
     override fun itemLongClick(position: Int) {
-        chatModel?.removeItem(position)
+        val builder = AlertDialog.Builder(context)
+        val items = arrayOf("delete", "cancel")
+        builder.setItems(items, DialogInterface.OnClickListener {
+            dialogInterface, i ->
+            when(i) {
+                0 -> {
+                    // delete
+                    chatModel?.removeItem(position)
+                }
+            }
+        })
+
+        val dialog = builder.create()
+        dialog.show()
+
     }
 }
