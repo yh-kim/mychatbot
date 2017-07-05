@@ -8,7 +8,7 @@ import android.content.Context
  * Github : https://github.com/yh-kim
  * Mail   : yonghoon.kim@pickth.com
  */
-class DataManagement {
+class DataManager {
     companion object {
         fun setAppPreferences(context: Context, key: String, value: String) {
             val pref = context.getSharedPreferences("chat", 0)

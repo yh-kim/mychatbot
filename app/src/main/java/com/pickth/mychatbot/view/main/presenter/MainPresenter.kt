@@ -36,7 +36,7 @@ class MainPresenter: MainContract.Presenter, OnItemClickListener {
      * 메인 뷰 설정
      */
     override fun attachView(view: MainContract.View, context: Context) {
-        this.view  = view
+        this.view = view
         this.context = context
     }
 
@@ -45,10 +45,14 @@ class MainPresenter: MainContract.Presenter, OnItemClickListener {
     }
 
     fun testInputItem(text: String) {
-        chatModel?.addItem(Message(text,ChatAdapter.CHAT_TYPE_USER))
-        chatModel?.addItem(Message("봇의 답변입니다",ChatAdapter.CHAT_TYPE_BOT_MESSAGE))
+        chatModel?.addItem(Message(text, ChatAdapter.CHAT_TYPE_USER))
+        chatModel?.addItem(Message("봇의 답변입니다", ChatAdapter.CHAT_TYPE_BOT_MESSAGE))
         Dlog.v("텍스트 입력")
 
         view?.scrollToLastChat()
+    }
+
+    override fun itemLongClick(position: Int) {
+        chatModel?.removeItem(position)
     }
 }

@@ -15,7 +15,7 @@ import com.pickth.mychatbot.R
 import com.pickth.mychatbot.base.BaseActivity
 import com.pickth.mychatbot.service.FloatingViewService
 import com.pickth.mychatbot.util.BackPressCloseHandler
-import com.pickth.mychatbot.util.DataManagement
+import com.pickth.mychatbot.util.DataManager
 import com.pickth.mychatbot.view.main.adapter.ChatAdapter
 import com.pickth.mychatbot.view.main.presenter.MainContract
 import com.pickth.mychatbot.view.main.presenter.MainPresenter
@@ -25,7 +25,8 @@ class MainActivity : BaseActivity(), MainContract.View {
     companion object {
         private val CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084
     }
-    var adapter: ChatAdapter? = null
+    lateinit var presenter: MainPresenter
+    lateinit var adapter: ChatAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +40,7 @@ class MainActivity : BaseActivity(), MainContract.View {
             // Initialize view
         }
 
-        val presenter = MainPresenter()
+        presenter = MainPresenter()
         presenter.attachView(this,applicationContext)
 
         adapter = ChatAdapter(applicationContext)
@@ -66,7 +67,7 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun scrollToLastChat() {
-        recycler_main_chat.layoutManager.scrollToPosition(adapter?.itemCount!! -1)
+        recycler_main_chat.layoutManager.scrollToPosition(adapter.itemCount -1)
     }
 
     override fun onBackPressed() {
@@ -104,13 +105,16 @@ class MainActivity : BaseActivity(), MainContract.View {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId) {
+            R.id.menu_chat_clear -> {
+                adapter.removeAllItems()
+            }
             R.id.menu_start_service -> {
                 startService(Intent(applicationContext, FloatingViewService::class.java))
-                DataManagement.setAppPreferences(applicationContext, "serviceStatus", "start")
+                DataManager.setAppPreferences(applicationContext, "serviceStatus", "start")
             }
             R.id.menu_stop_service -> {
                 stopService(Intent(applicationContext, FloatingViewService::class.java))
-                DataManagement.setAppPreferences(applicationContext, "serviceStatus", "stop")
+                DataManager.setAppPreferences(applicationContext, "serviceStatus", "stop")
             }
             else -> {}
         }

@@ -2,16 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:yourapp="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/menu_chat_clear"
+        android:title="채팅창 지우기"
+        android:icon="@mipmap/ic_launcher_round"
+        yourapp:showAsAction="collapseActionView" />
+
+    <item
         android:id="@+id/menu_start_service"
         android:title="서비스 시작"
         android:icon="@mipmap/ic_launcher"
-        yourapp:showAsAction="collapseActionView"
-        />
+        yourapp:showAsAction="collapseActionView" />
 
     <item
         android:id="@+id/menu_stop_service"
         android:title="서비스 정지"
         android:icon="@mipmap/ic_launcher_round"
-        yourapp:showAsAction="collapseActionView"
-        />
+        yourapp:showAsAction="collapseActionView" />
 </menu>

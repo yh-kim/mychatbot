@@ -19,6 +19,11 @@ class ChatViewHolder(view: View?, var onItemClickListener: OnItemClickListener?)
             text_chat_context.setOnClickListener {
                 onItemClickListener?.itemClick(position)
             }
+
+            text_chat_context.setOnLongClickListener {
+                onItemClickListener?.itemLongClick(position)
+                true
+            }
         }
     }
 }
