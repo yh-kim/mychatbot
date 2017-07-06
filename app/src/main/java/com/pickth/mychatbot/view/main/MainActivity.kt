@@ -64,10 +64,6 @@ class MainActivity : BaseActivity(), MainContract.View {
     override fun startChatBotActivity(position: Int) {
     }
 
-    override fun showToast(text: String) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
-    }
-
     override fun scrollToLastChat() {
         recycler_main_chat.layoutManager.scrollToPosition(adapter.itemCount -1)
     }

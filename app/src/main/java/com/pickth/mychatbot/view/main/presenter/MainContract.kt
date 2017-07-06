@@ -10,8 +10,6 @@ interface MainContract {
     interface View {
         fun startChatBotActivity(position: Int)
 
-        fun showToast(text: String)
-
         fun scrollToLastChat()
     }
 
