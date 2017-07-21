@@ -25,3 +25,14 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    propCompileSdkVersion = 25
+    propBuildToolsVersion = '25.0.2'
+    propMinSdkVersion = 19
+    propTargetSdkVersion = propCompileSdkVersion
+    propVersionCode = 1
+    propVersionName = '1.0.0'
+
+    support_libs = '25.3.1'
+}
