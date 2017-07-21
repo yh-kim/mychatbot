@@ -7,4 +7,6 @@ interface OnItemClickListener {
     fun itemLongClick(position: Int)
 
     fun itemClick(position: Int)
+
+    fun itemClickBackground()
 }

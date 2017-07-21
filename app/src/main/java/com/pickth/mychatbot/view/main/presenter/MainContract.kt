@@ -11,6 +11,8 @@ interface MainContract {
         fun startChatBotActivity(position: Int)
 
         fun scrollToLastChat()
+
+        fun hideSoftKeyboard()
     }
 
     interface Presenter {

@@ -9,10 +9,14 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.widget.Toast
+import com.pickth.commons.extensions.hideKeyboard
+import com.pickth.commons.extensions.toast
 import com.pickth.mychatbot.R
 import com.pickth.mychatbot.base.BaseActivity
 import com.pickth.mychatbot.service.FloatingViewService
@@ -24,11 +28,13 @@ import com.pickth.mychatbot.view.main.presenter.MainPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity(), MainContract.View {
+
     companion object {
         private val CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084
     }
     lateinit var presenter: MainPresenter
     lateinit var adapter: ChatAdapter
+    private var isKeyboarOn = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,11 +59,41 @@ class MainActivity : BaseActivity(), MainContract.View {
         presenter.setChatAdapterModel(adapter as ChatAdapter)
         presenter.setChatAdapterView(adapter as ChatAdapter)
 
+        edit_main_input.setOnClickListener {
+            isKeyboarOn = true
+            toast("keyboaron")
+        }
+
         btn_main_submit.setOnClickListener {
             val editText = edit_main_input
             presenter.testInputItem(editText.text.toString())
             editText.text = null
         }
+
+        recycler_main_chat.addOnItemTouchListener(object: RecyclerView.OnItemTouchListener {
+            override fun onTouchEvent(rv: RecyclerView?, e: MotionEvent?) {
+                when(e!!.action) {
+                    MotionEvent.ACTION_UP -> {
+                        hideSoftKeyboard()
+                    }
+
+                }
+
+            }
+
+            override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent?): Boolean {
+                val child = rv?.findChildViewUnder(e!!.x, e!!.y)
+                if(child != null) {
+                    return false
+                }
+
+                return true
+            }
+
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+            }
+
+        })
     }
 
     // MainContract 연결
@@ -75,6 +111,14 @@ class MainActivity : BaseActivity(), MainContract.View {
             Toast.makeText(applicationContext, "한번 더 누르면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show()
         }
 
+    }
+
+    override fun hideSoftKeyboard() {
+        if(isKeyboarOn) {
+            hideKeyboard()
+            isKeyboarOn = false
+            toast("keyboard down")
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

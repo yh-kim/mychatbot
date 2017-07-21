@@ -4,7 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
-import com.pickth.mychatbot.extensions.toast
+import com.pickth.commons.extensions.toast
 import com.pickth.mychatbot.util.Dlog
 import com.pickth.mychatbot.util.OnItemClickListener
 import com.pickth.mychatbot.view.main.adapter.ChatAdapter
@@ -15,6 +15,7 @@ import com.pickth.mychatbot.view.main.adapter.data.Message
  * Created by Kim on 2017-05-24.
  */
 class MainPresenter: MainContract.Presenter, OnItemClickListener {
+
     lateinit var context: Context
     lateinit var view: MainContract.View
     lateinit var chatView: ChatAdapterContract.View
@@ -44,11 +45,6 @@ class MainPresenter: MainContract.Presenter, OnItemClickListener {
         this.context = context
     }
 
-    override fun itemClick(position: Int) {
-        (this.context as Activity).toast("$position 번째 메시지를 누르셨습니다")
-//        this.view?.showToast("$position 번째 메시지를 누르셨습니다")
-    }
-
     fun testInputItem(text: String) {
         if(text == "") {
             (this.context as Activity).toast("텍스트를 입력해주세요.")
@@ -63,7 +59,14 @@ class MainPresenter: MainContract.Presenter, OnItemClickListener {
         view.scrollToLastChat()
     }
 
+    override fun itemClick(position: Int) {
+        (this.context as Activity).toast("$position 번째 메시지를 누르셨습니다")
+//        this.view?.showToast("$position 번째 메시지를 누르셨습니다")
+        view.hideSoftKeyboard()
+    }
+
     override fun itemLongClick(position: Int) {
+        view.hideSoftKeyboard()
         val builder = AlertDialog.Builder(context)
         val items = arrayOf("delete", "cancel")
         builder.setItems(items, DialogInterface.OnClickListener {
@@ -79,5 +82,9 @@ class MainPresenter: MainContract.Presenter, OnItemClickListener {
         val dialog = builder.create()
         dialog.show()
 
+    }
+
+    override fun itemClickBackground() {
+        view.hideSoftKeyboard()
     }
 }
